@@ -18,6 +18,8 @@ export default function Settings() {
   const { theme, setTheme } = useTheme();
   const [siteTitle, setSiteTitle] = useState('L3arbiFit');
   const [siteTagline, setSiteTagline] = useState('All the news that matters');
+  const [primaryColor, setPrimaryColor] = useState('#4f46e5');
+  const [secondaryColor, setSecondaryColor] = useState('#f59e0b');
   const [saving, setSaving] = useState(false);
 
   const { data: settings } = useQuery({
@@ -33,8 +35,20 @@ export default function Settings() {
       if (settings.site_title) setSiteTitle(settings.site_title as string);
       if (settings.site_tagline) setSiteTagline(settings.site_tagline as string);
       if (settings.theme) setTheme(settings.theme as 'paper' | 'ink');
+      if (settings.primary_color) setPrimaryColor(settings.primary_color as string);
+      if (settings.secondary_color) setSecondaryColor(settings.secondary_color as string);
     }
   }, [settings, setTheme]);
+
+  // whenever colors change apply them globally
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--color-primary', primaryColor);
+    root.style.setProperty('--color-secondary', secondaryColor);
+    // override the default primary/secondary used by tailwind
+    root.style.setProperty('--primary', primaryColor);
+    root.style.setProperty('--secondary', secondaryColor);
+  }, [primaryColor, secondaryColor]);
 
   const saveMutation = useMutation({
     mutationFn: async () => {
@@ -42,6 +56,8 @@ export default function Settings() {
         { key: 'site_title', value: JSON.stringify(siteTitle) },
         { key: 'site_tagline', value: JSON.stringify(siteTagline) },
         { key: 'theme', value: JSON.stringify(theme) },
+        { key: 'primary_color', value: JSON.stringify(primaryColor) },
+        { key: 'secondary_color', value: JSON.stringify(secondaryColor) },
       ];
 
       for (const update of updates) {
@@ -58,7 +74,7 @@ export default function Settings() {
         user_id: user!.id,
         action: 'updated',
         entity_type: 'site_settings',
-        details: { site_title: siteTitle, site_tagline: siteTagline, theme },
+        details: { site_title: siteTitle, site_tagline: siteTagline, theme, primaryColor, secondaryColor },
       });
     },
     onSuccess: () => {
@@ -102,6 +118,26 @@ export default function Settings() {
                 id="siteTagline"
                 value={siteTagline}
                 onChange={(e) => setSiteTagline(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="primaryColor">Primary Color</Label>
+              <Input
+                id="primaryColor"
+                type="color"
+                value={primaryColor}
+                onChange={(e) => setPrimaryColor(e.target.value)}
+                className="w-12 h-8 p-0"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="secondaryColor">Secondary Color</Label>
+              <Input
+                id="secondaryColor"
+                type="color"
+                value={secondaryColor}
+                onChange={(e) => setSecondaryColor(e.target.value)}
+                className="w-12 h-8 p-0"
               />
             </div>
           </CardContent>

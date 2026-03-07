@@ -73,6 +73,25 @@ export interface SiteSetting {
   updated_by: string | null;
 }
 
+// Pages are used for editable static content (About, Contact, etc.)
+export interface PageSection {
+  id: string;
+  heading?: string;
+  content: string;
+  // optional background color picked by admin (hex)
+  bgColor?: string;
+}
+
+export interface Page {
+  id: string;
+  slug: string;
+  title: string;
+  sections: PageSection[];
+  created_at: string;
+  updated_at: string;
+  updated_by: string | null;
+}
+
 export interface AuthUser {
   id: string;
   email: string;

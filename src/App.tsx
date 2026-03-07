@@ -24,6 +24,8 @@ import ResetPassword from "./pages/ResetPassword";
 
 // Admin pages
 import Dashboard from "./pages/admin/Dashboard";
+import Pages from "./pages/admin/Pages";
+import PageEditor from "./pages/admin/PageEditor";
 import ArticlesList from "./pages/admin/ArticlesList";
 import ArticleEditor from "./pages/admin/ArticleEditor";
 import UsersList from "./pages/admin/UsersList";
@@ -62,6 +64,8 @@ const App = () => (
               {/* Admin routes */}
               <Route path="/admin" element={<Dashboard />} />
               <Route path="/admin/articles" element={<ArticlesList />} />
+              <Route path="/admin/pages" element={<Pages />} />
+              <Route path="/admin/pages/:slug" element={<PageEditor />} />
               <Route path="/admin/articles/:id" element={<ArticleEditor />} />
               <Route path="/admin/categories" element={<Categories />} />
               <Route path="/admin/users" element={<UsersList />} />

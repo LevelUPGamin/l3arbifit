@@ -106,6 +106,36 @@ export type Database = {
         }
         Relationships: []
       }
+      pages: {
+        Row: {
+          id: string;
+          slug: string;
+          title: string;
+          sections: Json;
+          created_at: string;
+          updated_at: string;
+          updated_by: string | null;
+        }
+        Insert: {
+          id?: string;
+          slug: string;
+          title: string;
+          sections?: Json;
+          created_at?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        }
+        Update: {
+          id?: string;
+          slug?: string;
+          title?: string;
+          sections?: Json;
+          created_at?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        }
+        Relationships: []
+      }
       articles: {
         Row: {
           author_id: string

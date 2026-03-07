@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Mail, MapPin, Clock } from "lucide-react";
+import PageContent from "@/components/PageContent";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -56,6 +57,8 @@ const Contact = () => {
 
   return (
     <Layout>
+      <PageContent slug="contact" className="container mx-auto px-4 py-12" />
+
       <div className="max-w-4xl mx-auto px-4 py-12">
         <header className="mb-12 text-center">
           <h1 className="headline-xl mb-4">Contact Us</h1>
